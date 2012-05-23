@@ -26,10 +26,18 @@
             data_attribute  : "original",
             skip_invisible  : true,
             appear          : null,
-            load            : null
+            load            : null,
+            timeout         : 200
         };
 
+        var updateTimeout = null;
+
         function update() {
+            clearTimeout( updateTimeout );
+            updateTimeout = setTimeout( updateNow, settings.timeout );
+        }
+
+        function updateNow() {
             var counter = 0;
       
             elements.each(function() {
