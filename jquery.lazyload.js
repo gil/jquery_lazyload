@@ -22,7 +22,6 @@
             threshold       : 0,
             failure_limit   : 0,
             event           : "scroll",
-            effect          : "show",
             container       : window,
             data_attribute  : "original",
             skip_invisible  : true,
@@ -59,11 +58,7 @@
                 options.failure_limit = options.failurelimit; 
                 delete options.failurelimit;
             }
-            if (undefined !== options.effectspeed) {
-                options.effect_speed = options.effectspeed; 
-                delete options.effectspeed;
-            }
-
+            
             $.extend(settings, options);
         }
 
@@ -91,12 +86,10 @@
                         var elements_left = elements.length;
                         settings.appear.call(self, elements_left, settings);
                     }
-                    $("<img />")
-                        .bind("load", function() {
-                            $self
-                                .hide()
-                                .attr("src", $self.data(settings.data_attribute))
-                                [settings.effect](settings.effect_speed);
+                    
+                    $self
+                        .on("load", function(){
+
                             self.loaded = true;
 
                             /* Remove image from array so it is not looped next time. */
@@ -109,8 +102,10 @@
                                 var elements_left = elements.length;
                                 settings.load.call(self, elements_left, settings);
                             }
+
                         })
                         .attr("src", $self.data(settings.data_attribute));
+                        
                 }
             });
 
